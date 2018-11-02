@@ -11,9 +11,11 @@ interface Config {
 }
 
 export class Marker extends App {
+  private config: Config
 
-  constructor (context: Context, github: GitHubAPI, logger: LoggerWithTarget, config: Config) {
-    super(context, github, logger, config)
+  constructor (context: Context, logger: LoggerWithTarget, config: Config) {
+    super(context, logger)
+    this.config = config
   }
 
   async sweep () {
@@ -32,7 +34,7 @@ export class Marker extends App {
     const repo = this.context.repo({ number })
 
     await this.github.issues.addLabels({
-      labels: [App.TO_BE_CLOSED_LABEL],
+      labels: [App.toBeClosedLabel],
       ...repo
     })
 

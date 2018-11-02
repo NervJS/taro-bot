@@ -9,7 +9,7 @@ export = (robot: Application) => {
   robot.on('schedule.repository', sweep)
 
   async function sweep (context: Context) {
-    const marker = new Marker(context, context.github, context.log, { label: 'resolved', comment: 'test' })
+    const marker = new Marker(context, context.log, { label: 'resolved', comment: 'test' })
     marker.sweep()
   }
   // For more information on building apps:
