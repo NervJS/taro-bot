@@ -1,10 +1,17 @@
-import { Application } from 'probot' // eslint-disable-line no-unused-vars
+import { Application, Context } from 'probot' // eslint-disable-line no-unused-vars
+import { Marker } from './marker'
 
-export = (app: Application) => {
-  app.on('issues.opened', async (context) => {
-    const issueComment = context.issue({ body: 'Thanks for opening this issue!' })
-    await context.github.issues.createComment(issueComment)
-  })
+const createScheduler = require('probot-scheduler')
+
+export = (robot: Application) => {
+  createScheduler(robot)
+
+  robot.on('schedule.repository', sweep)
+
+  async function sweep (context: Context) {
+    const marker = new Marker(context, context.github, context.log, { label: 'resolved', comment: 'test' })
+    marker.sweep()
+  }
   // For more information on building apps:
   // https://probot.github.io/docs/
 
