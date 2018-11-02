@@ -4,9 +4,9 @@
   "description": "A bot app for Taro",
   "author": "yuche <i@yuche.me>",
   "license": "ISC",
-  "repository": "https://github.com//taro-bot.git",
-  "homepage": "https://github.com//taro-bot",
-  "bugs": "https://github.com//taro-bot/issues",
+  "repository": "https://github.com/nervjs/taro-bot.git",
+  "homepage": "https://github.com/nervjs/taro-bot",
+  "bugs": "https://github.com/nervjs/taro-bot/issues",
   "keywords": [
     "probot",
     "github",
