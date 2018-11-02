@@ -1,17 +1,12 @@
 import { LoggerWithTarget } from 'probot/lib/wrap-logger'
 import { Context } from 'probot'
 import { App } from './app'
+import { DAYS_UNTIL_CLOSE, TO_BE_CLOSED_LABEL } from './config'
+import { Issue } from './interface'
 
 const scramjet = require('scramjet')
 
-interface Issue {
-  owner: string;
-  repo: string;
-  number: number;
-}
-
 export class Closeable extends App {
-  static daysUntilClose = 15
 
   constructor (context: Context, logger: LoggerWithTarget) {
     super(context, logger)
@@ -20,10 +15,10 @@ export class Closeable extends App {
   async sweep () {
     this.logger.debug('Starting sweep Closeable')
 
-    await this.ensureLabelExists(this.context.repo({name: App.toBeClosedLabel }).name)
+    await this.ensureLabelExists(this.context.repo({name: TO_BE_CLOSED_LABEL }).name)
 
     const issues = await this.getClosableIssues()
-    issues.forEach(issue => this.close(this.context.repo({number: issue.number})))
+    issues.forEach(({ number }) => this.close(this.context.repo({ number })))
   }
 
   async unmark (issue: Issue) {
@@ -32,10 +27,10 @@ export class Closeable extends App {
 
     const issueInfo = await this.github.issues.get(issue)
 
-    const isMarked = await this.hasResponseRequiredLabel(issue)
+    const isMarked = await this.hasResponseLabel(issue, TO_BE_CLOSED_LABEL)
     if (isMarked && issueInfo.data.user.login === comment.user.login) {
       this.logger.info('%s/%s#%d is being unmarked', owner, repo, number)
-      await this.github.issues.removeLabel({owner, repo, number, name: App.toBeClosedLabel})
+      await this.github.issues.removeLabel({owner, repo, number, name: TO_BE_CLOSED_LABEL})
       if (issueInfo.data.state === 'closed' && issueInfo.data.user.login !== issueInfo.data.closed_by.login) {
         this.github.issues.edit({owner, repo, number, state: 'open'})
       }
@@ -45,7 +40,7 @@ export class Closeable extends App {
   private async close (issue: Issue) {
     const { owner, repo, number } = issue
     this.logger.info('%s/%s#%d is being closed', issue.owner, issue.repo, issue.number)
-    await this.github.issues.removeLabel({owner, repo, number, name: App.toBeClosedLabel})
+    await this.github.issues.removeLabel({owner, repo, number, name: TO_BE_CLOSED_LABEL})
     return this.github.issues.edit(Object.assign({}, issue, {state: 'closed'}))
   }
 
@@ -54,14 +49,14 @@ export class Closeable extends App {
     const events = await (this.github.paginate as any)(this.github.issues.getEvents(params))
     return events[0].data
       .reverse()
-      .find(event => event.event === 'labeled' && event.label.name === App.toBeClosedLabel);
+      .find(event => event.event === 'labeled' && event.label.name === TO_BE_CLOSED_LABEL);
   }
 
   private async getClosableIssues () {
     const { owner, repo } = this.context.repo()
-    const q = `repo:${owner}/${repo} is:issue is:open label:"${App.toBeClosedLabel}"`
+    const q = `repo:${owner}/${repo} is:issue is:open label:"${TO_BE_CLOSED_LABEL}"`
     const params = {q, sort: 'updated' as 'updated', order: 'desc' as 'desc', per_page: 30}
-    const labeledEarlierThan = this.since(Closeable.daysUntilClose)
+    const labeledEarlierThan = this.since(DAYS_UNTIL_CLOSE)
 
     const issues = await this.github.search.issues(params)
     const closableIssues = scramjet.fromArray(issues.data.items).filter(async issue => {
@@ -70,12 +65,6 @@ export class Closeable extends App {
       return creationDate < labeledEarlierThan
     }).toArray()
     return closableIssues
-  }
-
-  private async hasResponseRequiredLabel (issue: Issue) {
-    const labels = await this.github.issues.getIssueLabels(issue)
-
-    return labels.data.map(label => label.name).includes(App.toBeClosedLabel)
   }
 
   private since (days: number) {

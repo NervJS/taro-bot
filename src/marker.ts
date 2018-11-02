@@ -1,7 +1,7 @@
-import { GitHubAPI } from 'probot/lib/github'
 import { LoggerWithTarget } from 'probot/lib/wrap-logger'
 import { Context } from 'probot'
 import { App } from './app'
+import { TO_BE_CLOSED_LABEL } from "./config"
 
 const scramjet = require('scramjet')
 
@@ -32,16 +32,16 @@ export class Marker extends App {
     const { comment } = this.config
 
     const repo = this.context.repo({ number })
+    console.log(number)
+    // await this.github.issues.addLabels({
+    //   labels: [TO_BE_CLOSED_LABEL],
+    //   ...repo
+    // })
 
-    await this.github.issues.addLabels({
-      labels: [App.toBeClosedLabel],
-      ...repo
-    })
-
-    await this.github.issues.createComment({
-      body: comment,
-      ...repo
-    })
+    // await this.github.issues.createComment({
+    //   body: comment,
+    //   ...repo
+    // })
   }
 
   private async getMarkableIssue () {
@@ -51,9 +51,7 @@ export class Marker extends App {
     const params = { q, sort: 'updated' as 'updated', order: 'desc' as 'desc', per_page: 30 }
     const issues = await this.github.search.issues(params)
     const markableIssues = scramjet.fromArray(issues.data.items).filter(async (issue) => {
-      const params = { owner, repo, number: issue.number, per_page: 100 }
-      const [ events ] = await (this.github.paginate as any)(this.github.issues.getEvents(params))
-      return !!events.data.find((event) => event.event === 'labeled' && event.label.name === label)
+      return await this.hasResponseLabel({ owner, repo, number: issue.number }, label)
     }).toArray()
     return markableIssues
   }
