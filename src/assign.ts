@@ -2,7 +2,7 @@ import { Context } from 'probot'
 import { labelsResponser } from './config'
 
 export async function assignAccordingLabel (context: Context) {
-  const { labels, issue } = context.payload
+  const { issue: { labels, number } } = context.payload
   for (const labelName in labelsResponser) {
     if (labelsResponser.hasOwnProperty(labelName)) {
       const responsers = labelsResponser[labelName]
@@ -13,7 +13,7 @@ export async function assignAccordingLabel (context: Context) {
       try {
         const repo = context.repo()
         await context.github.issues.addAssigneesToIssue({
-          number: issue.number,
+          number,
           assignees: responsers,
           ...repo
         })

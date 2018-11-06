@@ -1,5 +1,6 @@
 import { Application, Context } from 'probot' // eslint-disable-line no-unused-vars
 import { Marker } from './marker'
+import { Closeable } from './close'
 import { welcomeNewIssue, welcomeNewPR } from './welcome'
 import { assignAccordingLabel, informAssignees } from './assign'
 
@@ -18,9 +19,18 @@ export = (robot: Application) => {
 
   robot.on('issues.assigned', informAssignees)
 
+  robot.on('issue_comment', unmark)
+
   async function sweep (context: Context) {
     const marker = new Marker(context, context.log, { label: 'resolved', comment: 'test' })
+    const closeable = new Closeable(context, context.log)
     marker.sweep()
+    closeable.sweep()
+  }
+
+  async function unmark (context: Context) {
+    const closeable = new Closeable(context, context.log)
+    closeable.unmark(context.issue())
   }
   // For more information on building apps:
   // https://probot.github.io/docs/
