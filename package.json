@@ -25,6 +25,7 @@
     "nock": "^10.0.0",
     "probot": "^7.2.0",
     "probot-scheduler": "^1.2.0",
+    "request-promise": "^4.2.2",
     "scramjet": "^4.18.14"
   },
   "devDependencies": {

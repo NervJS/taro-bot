@@ -24,7 +24,6 @@ function welcome (type: 'issue' | 'pr') {
     if (countPR && type === 'pr') {
       try {
         context.github.issues.createComment(context.issue({body: welcomeConfig.newPRWelcomeComment}))
-  
       } catch (err) {
         if (err.code !== 404) {
           context.log.info(err)

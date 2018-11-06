@@ -10,3 +10,16 @@ export const welcomeConfig: WelcomeConfig = {
 }
 
 export const markerConfigs: MarkerConfig[] = []
+
+interface LabelsResponser {
+  [key: string]: string[]
+}
+
+export const labelsResponser: LabelsResponser = {
+  '编译器': ['yuche'],
+  'CLI': ['luckyadam'],
+  '组件化': ['Chen-jj'],
+  'H5 组件库': ['jinjinjin0731'],
+  'React Native': ['Pines-Cheng'],
+  'H5': ['Littly']
+}

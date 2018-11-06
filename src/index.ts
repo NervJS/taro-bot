@@ -1,6 +1,7 @@
 import { Application, Context } from 'probot' // eslint-disable-line no-unused-vars
 import { Marker } from './marker'
 import { welcomeNewIssue, welcomeNewPR } from './welcome'
+import { assignAccordingLabel, informAssignees } from './assign'
 
 const createScheduler = require('probot-scheduler')
 
@@ -12,6 +13,10 @@ export = (robot: Application) => {
   robot.on('pull_request.opened', welcomeNewPR)
 
   robot.on('issues.opened', welcomeNewIssue)
+
+  robot.on('issues.labeled', assignAccordingLabel)
+
+  robot.on('issues.assigned', informAssignees)
 
   async function sweep (context: Context) {
     const marker = new Marker(context, context.log, { label: 'resolved', comment: 'test' })
