@@ -33,6 +33,12 @@ export class Marker extends App {
 
     const repo = this.context.repo({ number })
 
+    const hasToBeCloseLabel = await this.hasResponseLabel(repo, TO_BE_CLOSED_LABEL)
+
+    if (hasToBeCloseLabel) {
+      return
+    }
+
     await this.github.issues.addLabels({
       labels: [TO_BE_CLOSED_LABEL],
       ...repo

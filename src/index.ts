@@ -17,17 +17,17 @@ export = (robot: Application) => {
   robot.on('issues.assigned', informAssignees)
 
   async function sweep (context: Context) {
-    markerConfigs.forEach((config) => {
+    const markers = markerConfigs.map((config) => {
       const marker = new Marker(context, context.log, config)
-      marker.sweep()
+      return marker.sweep()
     })
     const closeable = new Closeable(context, context.log)
-    closeable.sweep()
+    await Promise.all([...markers, closeable.sweep()])
   }
 
   async function unmark (context: Context) {
     const closeable = new Closeable(context, context.log)
-    closeable.unmark(context.issue())
+    await closeable.unmark(context.issue())
   }
 
   createScheduler(robot)
