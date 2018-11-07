@@ -44,7 +44,7 @@ export const markerConfigs: MarkerConfig[] = [
   },
   {
     label: 'answsered',
-    comment: buildComment('您的问题楼上已经有回答了，如果没有更多的问题这个 issue 将在 15 天后被自动关闭。')
+    comment: buildComment('您的问题楼上已经有了确切的回答，如果没有更多的问题这个 issue 将在 15 天后被自动关闭。')
   },
   {
     label: 'resovled',

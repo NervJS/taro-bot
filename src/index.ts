@@ -3,6 +3,7 @@ import { Marker } from './marker'
 import { Closeable } from './close'
 import { welcomeNewIssue, welcomeNewPR } from './welcome'
 import { assignAccordingLabel, informAssignees } from './assign'
+import { markerConfigs } from './config'
 
 const createScheduler = require('probot-scheduler')
 
@@ -22,8 +23,10 @@ export = (robot: Application) => {
   robot.on('issue_comment', unmark)
 
   async function sweep (context: Context) {
-    const marker = new Marker(context, context.log, { label: 'resolved', comment: 'test' })
-    marker.sweep()
+    markerConfigs.forEach((config) => {
+      const marker = new Marker(context, context.log, config)
+      marker.sweep()
+    })
     const closeable = new Closeable(context, context.log)
     closeable.sweep()
   }

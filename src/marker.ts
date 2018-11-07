@@ -32,16 +32,16 @@ export class Marker extends App {
     const { comment } = this.config
 
     const repo = this.context.repo({ number })
-    console.log(number)
-    // await this.github.issues.addLabels({
-    //   labels: [TO_BE_CLOSED_LABEL],
-    //   ...repo
-    // })
 
-    // await this.github.issues.createComment({
-    //   body: comment,
-    //   ...repo
-    // })
+    await this.github.issues.addLabels({
+      labels: [TO_BE_CLOSED_LABEL],
+      ...repo
+    })
+
+    await this.github.issues.createComment({
+      body: comment,
+      ...repo
+    })
   }
 
   private async getMarkableIssue () {
