@@ -43,7 +43,9 @@
   },
   "now": {
     "files": [
-      ".env"
+      ".env",
+      "tsconfig.json",
+      "src"
     ]
   },
   "engines": {

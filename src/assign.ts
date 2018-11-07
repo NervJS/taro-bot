@@ -25,17 +25,16 @@ export async function assignAccordingLabel (context: Context) {
 }
 
 export async function informAssignees (context: Context) {
-  const { sender, assignees } = context.payload
-  const isSelfAssign = assignees.some((a => a.login === sender.login))
-  if (isSelfAssign) {
+  const { sender, assignee } = context.payload
+  if (sender.login === assignee.login) {
     return
   }
 
   try {
-    await Promise.all(assignees.map(a => context.github.issues.createComment({
-      body: `CC @${a.login} `,
+    await context.github.issues.createComment({
+      body: `CC @${assignee.login} `,
       ...context.repo()
-    })))
+    })
   } catch (error) {
     context.log.error(error)
   }
