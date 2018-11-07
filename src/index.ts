@@ -23,8 +23,8 @@ export = (robot: Application) => {
 
   async function sweep (context: Context) {
     const marker = new Marker(context, context.log, { label: 'resolved', comment: 'test' })
-    const closeable = new Closeable(context, context.log)
     marker.sweep()
+    const closeable = new Closeable(context, context.log)
     closeable.sweep()
   }
 
