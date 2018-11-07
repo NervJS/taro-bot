@@ -1,7 +1,7 @@
 {
   "name": "taro-bot",
   "version": "1.0.0",
-  "description": "A bot app for Taro s",
+  "description": "A bot app for Taro",
   "author": "yuche <i@yuche.me>",
   "license": "ISC",
   "repository": "https://github.com/nervjs/taro-bot.git",
@@ -40,6 +40,11 @@
     "ts-jest": "^23.0.0",
     "typescript": "^2.9.2",
     "typescript-eslint-parser": "^18.0.0"
+  },
+  "now": {
+    "files": [
+      ".env"
+    ]
   },
   "engines": {
     "node": ">= 8.3.0"

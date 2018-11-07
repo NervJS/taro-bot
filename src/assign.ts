@@ -3,12 +3,10 @@ import { labelsResponser } from './config'
 
 export async function assignAccordingLabel (context: Context) {
   const { issue: { labels, number } } = context.payload
-  context.log.info(labels, number)
   for (const labelName in labelsResponser) {
     if (labelsResponser.hasOwnProperty(labelName)) {
       const responsers = labelsResponser[labelName]
       const label = labels.find(({ name }) => name === labelName)
-      context.log.info(responsers, label)
       if (!label) {
         continue
       }
