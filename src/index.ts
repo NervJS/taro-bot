@@ -8,10 +8,6 @@ import { markerConfigs } from './config'
 const createScheduler = require('probot-scheduler')
 
 export = (robot: Application) => {
-  createScheduler(robot)
-
-  robot.on('schedule.repository', sweep)
-
   robot.on('pull_request.opened', welcomeNewPR)
 
   robot.on('issues.opened', welcomeNewIssue)
@@ -19,8 +15,6 @@ export = (robot: Application) => {
   robot.on('issues.labeled', assignAccordingLabel)
 
   robot.on('issues.assigned', informAssignees)
-
-  robot.on('issue_comment', unmark)
 
   async function sweep (context: Context) {
     markerConfigs.forEach((config) => {
@@ -35,6 +29,13 @@ export = (robot: Application) => {
     const closeable = new Closeable(context, context.log)
     closeable.unmark(context.issue())
   }
+
+  createScheduler(robot)
+
+  robot.on('schedule.repository', sweep)
+
+  robot.on('issue_comment', unmark)
+
   // For more information on building apps:
   // https://probot.github.io/docs/
 
