@@ -32,7 +32,7 @@ export class Closeable extends App {
       this.logger.info('%s/%s#%d is being unmarked', owner, repo, number)
       await this.github.issues.removeLabel({owner, repo, number, name: TO_BE_CLOSED_LABEL})
       if (issueInfo.data.state === 'closed' && issueInfo.data.user.login !== issueInfo.data.closed_by.login) {
-        this.github.issues.edit({owner, repo, number, state: 'open'})
+        await this.github.issues.edit({owner, repo, number, state: 'open'})
       }
     }
   }
@@ -63,7 +63,7 @@ export class Closeable extends App {
       const event = await this.findLastLabeledEvent(owner, repo, issue.number)
       const creationDate = new Date(event.created_at)
       return creationDate < labeledEarlierThan
-    }).toArray()
+    }).toArray() as any[]
     return closableIssues
   }
 

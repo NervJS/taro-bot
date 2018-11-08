@@ -11,7 +11,7 @@ function welcome (type: 'issue' | 'pr') {
     const countIssue = response.data.find(data => !data.pull_request)
     if (countIssue && type === 'issue') {
       try {
-        context.github.issues.createComment(context.issue({ body: welcomeConfig.newIssueWelcomeComment }))
+        await context.github.issues.createComment(context.issue({ body: welcomeConfig.newIssueWelcomeComment }))
       } catch (err) {
         if (err.code !== 404) {
           context.log.info(err)
@@ -23,7 +23,7 @@ function welcome (type: 'issue' | 'pr') {
   
     if (countPR && type === 'pr') {
       try {
-        context.github.issues.createComment(context.issue({body: welcomeConfig.newPRWelcomeComment}))
+        await context.github.issues.createComment(context.issue({body: welcomeConfig.newPRWelcomeComment}))
       } catch (err) {
         if (err.code !== 404) {
           context.log.info(err)

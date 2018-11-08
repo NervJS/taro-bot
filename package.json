@@ -23,6 +23,7 @@
   },
   "dependencies": {
     "@types/nock": "^9.3.0",
+    "moment": "^2.22.2",
     "nock": "^10.0.0",
     "probot": "^7.2.0",
     "probot-scheduler": "^1.2.0",
