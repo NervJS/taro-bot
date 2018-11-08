@@ -1,9 +1,13 @@
 import { MarkerConfig, WelcomeConfig } from './interface'
 
+
+// 倒数关闭的 issue 标签名字
 export const TO_BE_CLOSED_LABEL = 'to be closed'
 
+// 倒数关闭时间
 export const DAYS_UNTIL_CLOSE = 15
 
+// 首次提交 issue 的欢迎语
 const newIssueWelcomeComment = `欢迎提交 Issue~
 
 如果你提交的是 bug 报告，请务必遵循 [Issue 模板](https://github.com/NervJS/taro/blob/master/.github/ISSUE_TEMPLATE/bug_report.md)的规范，尽量用简洁的语言描述你的问题，最好能提供一个稳定简单的复现。🙏🙏🙏
@@ -12,6 +16,7 @@ const newIssueWelcomeComment = `欢迎提交 Issue~
 
 Good luck and happy coding~`
 
+// 首次提交 PR 的欢迎语
 const newPRWelcomeComment = `欢迎提交 Pull Request~
 
 请检查您的代码符合 [JavaScript Standard Guide](https://github.com/standard/standard) 规范，您的提交信息也应当遵循 [Angular Style Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)。
@@ -25,16 +30,20 @@ export const welcomeConfig: WelcomeConfig = {
   newPRWelcomeComment
 }
 
+
+// 自动关闭 issue 的模板
 function buildComment (str: string) {
   return `Hello~
 
 ${str}
 
-如果您在这 15 天中更新更多信息自动关闭的流程会自动取消，如有其他问题也可以发起新的 Issue。
+如果您在这 ${DAYS_UNTIL_CLOSE} 天中更新更多信息自动关闭的流程会自动取消，如有其他问题也可以发起新的 Issue。
 
 Good luck and happy coding~`
 }
 
+
+// 需要自动关闭的 issue 标签
 export const markerConfigs: MarkerConfig[] = [
   {
     label: '信息不足',
@@ -58,6 +67,7 @@ interface LabelsResponser {
   [key: string]: string[]
 }
 
+// 根据标签自动指派负责人，如果不是自己指派自己，就新建评论 at 负责人
 export const labelsResponser: LabelsResponser = {
   '编译器': ['yuche'],
   'CLI': ['luckyadam'],
