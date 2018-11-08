@@ -8,7 +8,9 @@ const newIssueWelcomeComment = `欢迎提交 Issue~
 
 如果你提交的是 bug 报告，请务必遵循 [Issue 模板](https://github.com/NervJS/taro/blob/master/.github/ISSUE_TEMPLATE/bug_report.md)的规范，尽量用简洁的语言描述你的问题，最好能提供一个稳定简单的复现。🙏🙏🙏
 
-如果你的信息提供过于模糊或不足，或者已经其他 issue 已经存在相关内容，你的 issue 有可能会被关闭。`
+如果你的信息提供过于模糊或不足，或者已经其他 issue 已经存在相关内容，你的 issue 有可能会被关闭。
+
+Good luck and happy coding~`
 
 const newPRWelcomeComment = `欢迎提交 Pull Request~
 
