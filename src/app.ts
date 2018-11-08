@@ -3,6 +3,15 @@ import { LoggerWithTarget } from 'probot/lib/wrap-logger'
 import { Context } from 'probot'
 import { Issue } from './interface'
 
+function getRandomColor() {
+  const letters = '0123456789ABCDEF'
+  let color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
+}
+
 export class App {
   protected context: Context
   protected github: GitHubAPI
@@ -23,7 +32,7 @@ export class App {
 
   protected async ensureLabelExists (name: string): Promise<any> {
     return this.github.issues.getLabel(this.context.repo({ name })).catch(() => {
-      return this.github.issues.createLabel(this.context.repo({ name, color: '#E0E0E0' }))
+      return this.github.issues.createLabel(this.context.repo({ name, color: getRandomColor() }))
     })
   }
 
