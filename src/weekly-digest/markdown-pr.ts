@@ -33,21 +33,24 @@ export const markdownPullRequests = (pullRequests: any[], headDate: string, tail
     let updatedPullRequestString
     if (mergedPullRequest.length > 0) {
       mergedPullRequestString = '## MERGED PULL REQUEST\n'
-      mergedPullRequestString += `上周 merge 了 ${mergedPullRequest.length} 个 pull request。\n`
+      mergedPullRequestString += `上周 merge 了 ${mergedPullRequest.length} 个 pull request:\n`
+      mergedPullRequestString += `\n`
       mergedPullRequest.forEach((item) => {
         mergedPullRequestString += `:purple_heart: #${item.number} [${item.title.replace(/\n/g, ' ')}](${item.html_url}), by [${item.user.login}](${item.user.html_url})\n`
       })
     }
     if (openPullRequest.length > 0) {
       openPullRequestString = '## OPEN PULL REQUEST\n'
-      openPullRequestString += `上周打开了 ${openPullRequest.length} 个 pull request。\n`
+      openPullRequestString += `上周打开了 ${openPullRequest.length} 个 pull request:\n`
+      mergedPullRequestString += `\n`
       openPullRequest.forEach((item) => {
         openPullRequestString += `:green_heart: #${item.number} [${item.title.replace(/\n/g, ' ')}](${item.html_url}), by [${item.user.login}](${item.user.html_url})\n`
       })
     }
     if (updatedPullRequest.length > 0) {
       updatedPullRequestString = '## UPDATED PULL REQUEST\n'
-      updatedPullRequestString += `上周有 ${updatedPullRequest.length} 个 pull request 更新。\n`
+      updatedPullRequestString += `上周有 ${updatedPullRequest.length} 个 pull request 更新:\n`
+      mergedPullRequestString += `\n`
       updatedPullRequest.forEach((item) => {
         updatedPullRequestString += `:yellow_heart: #${item.number} [${item.title.replace(/\n/g, ' ')}](${item.html_url}), by [${item.user.login}](${item.user.html_url})\n`
       })

@@ -15,7 +15,6 @@ export class WeeklyDigest extends App {
   }
 
   async sweep () {
-    console.log('fuck')
     await this.ensureLabelExists('weekly-digest', '9C27B0')
 
     const headDate = getHeadDate()
@@ -32,16 +31,16 @@ export class WeeklyDigest extends App {
   }
 
   private async digest (headDate: string, tailDate: string) {
-    console.log('digest')
     const headDateObject = moment(headDate).toObject()
     const tailDateObject = moment(tailDate).toObject()
     const title = `项目周报 (${buildDate(tailDateObject)} - ${buildDate(headDateObject)})`
     const body = await markdownBody(this.context, headDate, tailDate)
     const labels = ['weekly-digest']
-    // await this.createIssue({ title, body, labels })
+    await this.createIssue({ title, body, labels })
+    console.log('released')
     // console.log(title, labels, body)
-    console.log(title)
-    console.log(body)
+    // console.log(title)
+    // console.log(body)
   }
 
   private async createIssue ({ title, body, labels }) {

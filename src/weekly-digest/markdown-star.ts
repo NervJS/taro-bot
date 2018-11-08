@@ -12,9 +12,11 @@ export const markdownStargazers = (stargazers: any[], headDate: string, tailDate
     stargazersString += `上周没有新的 star.\n`
   } else {
     stargazersString += `上周获得了 ${data.length} 个 star。它们分别来自于：\n`
+    stargazersString += `\n`
     data.forEach((item) => {
       stargazersString += `:star: [${item.user.login}](${item.user.html_url}) | `
     })
+    stargazersString += `\n`
     stargazersString += `You all are the stars! :star2:\n`
   }
   return stargazersString

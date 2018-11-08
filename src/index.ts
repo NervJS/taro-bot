@@ -4,29 +4,27 @@ import { Closeable } from './close'
 import { welcomeNewIssue, welcomeNewPR } from './welcome'
 import { assignAccordingLabel, informAssignees } from './assign'
 import { markerConfigs } from './config'
-import { getReleases } from './weekly-digest/utils'
 import { WeeklyDigest } from './weekly-digest/digest'
 
 const createScheduler = require('probot-scheduler')
 
 export = (robot: Application) => {
-  // robot.on('pull_request.opened', welcomeNewPR)
+  robot.on('pull_request.opened', welcomeNewPR)
 
-  // robot.on('issues.opened', welcomeNewIssue)
+  robot.on('issues.opened', welcomeNewIssue)
 
-  // robot.on('issues.labeled', assignAccordingLabel)
+  robot.on('issues.labeled', assignAccordingLabel)
 
-  // robot.on('issues.assigned', informAssignees)
+  robot.on('issues.assigned', informAssignees)
 
   async function sweep (context: Context) {
-    // const markers = markerConfigs.map((config) => {
-    //   const marker = new Marker(context, context.log, config)
-    //   return marker.sweep()
-    // })
-    // const closeable = new Closeable(context, context.log)
+    const markers = markerConfigs.map((config) => {
+      const marker = new Marker(context, context.log, config)
+      return marker.sweep()
+    })
+    const closeable = new Closeable(context, context.log)
     const weeklyDigest = new WeeklyDigest(context, context.log)
-    await weeklyDigest.sweep()
-    // await Promise.all([...markers, closeable.sweep()])
+    await Promise.all([...markers, closeable.sweep(), weeklyDigest.sweep()])
   }
 
   async function unmark (context: Context) {
@@ -38,7 +36,7 @@ export = (robot: Application) => {
 
   robot.on('schedule.repository', sweep)
 
-  // robot.on('issue_comment', unmark)
+  robot.on('issue_comment', unmark)
 
   // For more information on building apps:
   // https://probot.github.io/docs/

@@ -1,5 +1,6 @@
 import moment from 'moment'
 import { Context } from 'probot'
+import { activate } from 'nock';
 
 export const getHeadDate = () => {
   return moment.utc().set({'hour': 0, 'minute': 0, 'second': 0, 'millisecond': 0}).format()
@@ -98,8 +99,11 @@ export const getStargazers = async (context: Context) => {
   let stargazers = await context.github.paginate(
     context.github.activity.getStargazersForRepo({
       owner,
-      repo
-    }),
+      repo,
+      headers: {
+        accept: 'application/vnd.github.v3.star+json'
+      }
+    } as any ),
     res => res.data
   )
   return stargazers
@@ -116,7 +120,7 @@ export const checkDuplicates = async (context: Context, headDate: string) => {
 }
 
 export const getMouthName = (month: number) => {
-  return `${month} 月`
+  return `${month + 1} 月`
 }
 
 export const getNumDayFromLongDay = (day) => {
