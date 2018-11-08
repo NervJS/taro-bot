@@ -25,7 +25,7 @@ export async function assignAccordingLabel (context: Context) {
 }
 
 export async function informAssignees (context: Context) {
-  const { sender, assignee } = context.payload
+  const { sender, assignee, issue } = context.payload
   if (sender.login === assignee.login) {
     return
   }
@@ -33,6 +33,7 @@ export async function informAssignees (context: Context) {
   try {
     await context.github.issues.createComment({
       body: `CC @${assignee.login} `,
+      number: issue.number,
       ...context.repo()
     })
   } catch (error) {
