@@ -25,7 +25,7 @@ export class WeeklyDigest extends App {
       return
     }
 
-    if (moment.utc().day() === getNumDayFromLongDay(4)) {
+    if (moment.utc().day() === getNumDayFromLongDay(6)) {
       await this.digest(headDate, tailDate)
     }
   }

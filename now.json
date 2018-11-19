@@ -1,0 +1,14 @@
+{
+  "name": "taro-bot",
+  "alias": "taro-bot.now.sh",
+  "files": [
+    "src",
+    ".env",
+    "lib",
+    "tsconfig.json"
+  ],
+  "builds": [
+    { "src": "src/index.ts", "use": "@now/node" }
+  ],
+  "version": 2
+}
