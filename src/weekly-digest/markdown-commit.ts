@@ -16,7 +16,7 @@ export const markdownCommits = (commits, headDate, tailDate) => {
     commitsString += `上周共有 ${data.length} 个 提交：\n`
     commitsString += `\n`
     data.forEach((item) => {
-      commitsString += `:hammer_and_wrench: [${item.commit.message.replace(/\n/g, ' ')}](${item.html_url}) by [${item.author.login}](${item.author.html_url})\n`
+      commitsString += `:hammer_and_wrench: [${item.commit.message.split('\n')[0]}](${item.html_url}) by [${item.author.login}](${item.author.html_url})\n`
     })
   }
   return commitsString

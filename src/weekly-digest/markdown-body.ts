@@ -49,6 +49,6 @@ export const markdownBody = async (context: Context, headDate: string, tailDate:
 
   body += `\n - - - \n`
   body += '\n'
-  body += `以上就是本周的项目周报。你可以点击 [weekly-digest](https://github.com/NervJS/taro/issues?q=is%3Aopen+is%3Aissue+label%3Aweekly-digest) 查看往期的项目周报。`
+  body += `以上就是本周的项目周报。你可以点击 [weekly-digest](https://github.com/NervJS/taro/issues?q=is%3Aissue+label%3Aweekly-digest) 查看往期的项目周报。`
   return body
 }
