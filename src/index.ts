@@ -15,7 +15,7 @@ export = (robot: Application) => {
 
   robot.on('issues.labeled', assignAccordingLabel)
 
-  robot.on('issues.assigned', informAssignees)
+  // robot.on('issues.assigned', informAssignees)
 
   async function sweep (context: Context) {
     const markers = markerConfigs.map((config) => {

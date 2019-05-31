@@ -5,7 +5,7 @@ import { MarkerConfig, WelcomeConfig } from './interface'
 export const TO_BE_CLOSED_LABEL = 'to be closed'
 
 // 倒数关闭时间
-export const DAYS_UNTIL_CLOSE = 15
+export const DAYS_UNTIL_CLOSE = 5
 
 // 首次提交 issue 的欢迎语
 const newIssueWelcomeComment = `欢迎提交 Issue~
@@ -47,20 +47,36 @@ Good luck and happy coding~`
 export const markerConfigs: MarkerConfig[] = [
   {
     label: '信息不足',
-    comment: buildComment('您的问题所提供的信息不足，我们无法定位到具体的问题。如果有空的话还请拔冗提供更具体的信息，否则这个 issue 将在 15 天后被自动关闭。')
+    comment: buildComment(`您的问题所提供的信息不足，我们无法定位到具体的问题。如果有空的话还请拔冗提供更具体的信息，否则这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
   },
   {
     label: '需要复现',
-    comment: buildComment('您的问题我们无法复现。如果有空的话还请拔冗提供一个简单的复现 demo，否则这个 issue 将在 15 天后被自动关闭。')
+    comment: buildComment(`您的问题我们无法复现。如果有空的话还请拔冗提供一个简单的复现 demo，否则这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
   },
   {
     label: 'answered',
-    comment: buildComment('您的问题楼上已经有了确切的回答，如果没有更多的问题这个 issue 将在 15 天后被自动关闭。')
+    comment: buildComment(`您的问题楼上已经有了确切的回答，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
   },
   {
     label: 'resolved',
-    comment: buildComment('您的问题楼上已经提供了解决方案，如果没有更多的问题这个 issue 将在 15 天后被自动关闭。')
-  }
+    comment: buildComment(`您的问题楼上已经提供了解决方案，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  },
+  {
+    label: '无法复现',
+    comment: buildComment(`您的问题无法复现，如果不提供更多信息这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  },
+  {
+    label: '无有效信息',
+    comment: buildComment(`您的问题无有效信息，如果不提供更多信息这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  },
+  {
+    label: '微信小程序自身限制',
+    comment: buildComment(`由于微信小程序自身限制，这个问题无法解决，如果没有其它问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  },
+  {
+    label: '容器限制',
+    comment: buildComment(`由于容器限制，这个问题无法解决，如果没有其它问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  },
 ]
 
 interface LabelsResponser {
@@ -72,8 +88,11 @@ export const labelsResponser: LabelsResponser = {
   '编译器': ['yuche'],
   'CLI': ['luckyadam'],
   '组件化': ['Chen-jj'],
+  'API': ['Chen-jj'],
   'H5 组件库': ['jinjinjin0731'],
   'React Native': ['Pines-Cheng'],
   'docs': ['Pines-Cheng'],
-  'H5': ['Littly']
+  'H5': ['Chen-jj'],
+  'taroize': ['yuche'],
+  'Nerv': ['yuche'],
 }
