@@ -74,5 +74,6 @@ export const labelsResponser: LabelsResponser = {
   '组件化': ['Chen-jj'],
   'H5 组件库': ['jinjinjin0731'],
   'React Native': ['Pines-Cheng'],
+  'docs': ['Pines-Cheng'],
   'H5': ['Littly']
 }
