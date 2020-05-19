@@ -9,9 +9,9 @@ import { WeeklyDigest } from './weekly-digest/digest'
 const createScheduler = require('probot-scheduler')
 
 export = (robot: Application) => {
-  robot.on('pull_request.opened', welcomeNewPR)
+  // robot.on('pull_request.opened', welcomeNewPR)
 
-  robot.on('issues.opened', welcomeNewIssue)
+  // robot.on('issues.opened', welcomeNewIssue)
 
   robot.on('issues.labeled', assignAccordingLabel)
 
