@@ -1,5 +1,6 @@
 import { Context } from 'probot'
 import { labelsResponser } from './config'
+import { connect } from 'net';
 
 export async function assignAccordingLabel (context: Context) {
   const { issue: { labels, number } } = context.payload
@@ -22,6 +23,14 @@ export async function assignAccordingLabel (context: Context) {
       }
     }
   }
+
+  // if (labels.find(({ name }) => name === 'duplicate')) {
+  //   try {
+  //     await context.github.issues.
+  //   } catch (error) {
+      
+  //   }
+  // }
 }
 
 export async function informAssignees (context: Context) {
@@ -32,9 +41,9 @@ export async function informAssignees (context: Context) {
 
   try {
     await context.github.issues.createComment({
+      ...context.repo(),
       body: `CC @${assignee.login} `,
       number: issue.number,
-      ...context.repo()
     })
   } catch (error) {
     context.log.error(error)
