@@ -25,6 +25,17 @@ export async function assignAccordingLabel (context: Context) {
     }
   }
 
+  if (labels.some(l => l.name === 'duplicate')) {
+    try {
+      await context.github.issues.edit({
+        ...context.repo(),
+        state: 'closed'
+      }) 
+    } catch (error) {
+      context.log.error(error)
+    }
+  }
+
   await assignMilestone(context, labels, number)
 }
 

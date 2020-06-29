@@ -54,38 +54,26 @@ Good luck and happy coding~`
 
 // 需要自动关闭的 issue 标签
 export const markerConfigs: MarkerConfig[] = [
-  {
-    label: '信息不足',
-    comment: buildComment(`您的问题所提供的信息不足，我们无法定位到具体的问题。如果有空的话还请拔冗提供更具体的信息，否则这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
-  {
-    label: '需要复现',
-    comment: buildComment(`您的问题我们无法复现。如果有空的话还请拔冗提供一个简单的复现 demo，否则这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
-  {
-    label: 'answered',
-    comment: buildComment(`您的问题楼上已经有了确切的回答，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
+  // {
+  //   label: '信息不足',
+  //   comment: buildComment(`您的问题所提供的信息不足，我们无法定位到具体的问题。如果有空的话还请拔冗提供更具体的信息，否则这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  // },
+  // {
+  //   label: '需要复现',
+  //   comment: buildComment(`您的问题我们无法复现。如果有空的话还请拔冗提供一个简单的复现 demo，否则这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  // },
+  // {
+  //   label: 'answered',
+  //   comment: buildComment(`您的问题楼上已经有了确切的回答，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  // },
   {
     label: 'resolved',
-    comment: buildComment(`您的问题楼上已经提供了解决方案，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+    comment: buildComment(`你的问题楼上已经提供了解决方案，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
   },
   {
-    label: '无法复现',
-    comment: buildComment(`您的问题无法复现，如果不提供更多信息这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
-  {
-    label: '无有效信息',
-    comment: buildComment(`您的问题无有效信息，如果不提供更多信息这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
-  {
-    label: '微信小程序自身限制',
-    comment: buildComment(`由于微信小程序自身限制，这个问题无法解决，如果没有其它问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
-  {
-    label: '容器限制',
-    comment: buildComment(`由于容器限制，这个问题无法解决，如果没有其它问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
-  },
+    label: 'wonfix',
+    comment: buildComment(`这个问题由于客观原因不会被修复，如果没有更多的问题这个 issue 将在 ${DAYS_UNTIL_CLOSE} 天后被自动关闭。`)
+  }
 ]
 
 interface LabelsResponser {
