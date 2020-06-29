@@ -94,14 +94,10 @@ interface LabelsResponser {
 
 // 根据标签自动指派负责人，如果不是自己指派自己，就新建评论 at 负责人
 export const labelsResponser: LabelsResponser = {
-  '编译器': ['yuche'],
-  'CLI': ['luckyadam'],
-  '组件化': ['Chen-jj'],
-  'API': ['Chen-jj'],
-  'H5 组件库': ['jinjinjin0731'],
-  'React Native': ['Pines-Cheng'],
-  'docs': ['Pines-Cheng'],
-  'H5': ['Chen-jj'],
-  'taroize': ['yuche'],
-  'Nerv': ['yuche'],
+  'A-typings': ['ZakaryCode'],
+  'A-runner': ['Chen-jj'],
+  'A-cli': ['luckyadam'],
+  'A-taroize': ['luckyadam'],
+  'A-rn': ['Pines-Cheng'],
+  'A-runtime': ['yuche']
 }

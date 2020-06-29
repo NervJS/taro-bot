@@ -1,6 +1,7 @@
 import { Context } from 'probot'
 import { labelsResponser } from './config'
-import { connect } from 'net';
+import getlatestVersion from 'latest-version'
+import * as semver from 'semver'
 
 export async function assignAccordingLabel (context: Context) {
   const { issue: { labels, number } } = context.payload
@@ -24,13 +25,53 @@ export async function assignAccordingLabel (context: Context) {
     }
   }
 
-  // if (labels.find(({ name }) => name === 'duplicate')) {
-  //   try {
-  //     await context.github.issues.
-  //   } catch (error) {
-      
-  //   }
-  // }
+  await assignMilestone(context, labels, number)
+}
+
+async function assignMilestone (context: Context, labels: string[], number: number) {
+  const { data: currentMilestone } = await context.github.issues.getMilestone({
+    ...context.repo(),
+    number
+  })
+
+  if (currentMilestone && currentMilestone.id) {
+    return
+  }
+
+  const latestVersion = await getlatestVersion('@tarojs/runtime')
+
+  const { data: milestones = [] } = await context.github.issues.getMilestones({...context.repo()})
+
+  const nextPatch = semver.inc(latestVersion, 'patch')
+  const nextMinor = semver.inc(latestVersion, 'minor')
+
+  if (labels.find(l => l === 'P-0' || l === 'P-1')) {
+    const milestone = milestones.find(m => m.title === nextPatch)
+    if (milestone) {
+      try {
+        await context.github.issues.edit({
+          ...context.repo(),
+          milestone: milestone.number
+        })
+      } catch (error) {
+        context.log.error(error)
+      }
+    }
+  }
+
+  if (labels.find(l => l === 'P-2')) {
+    const milestone = milestones.find(m => m.title === nextMinor)
+    if (milestone) {
+      try {
+        await context.github.issues.edit({
+          ...context.repo(),
+          milestone: milestone.number
+        })
+      } catch (error) {
+        context.log.error(error)
+      }
+    }
+  }
 }
 
 export async function informAssignees (context: Context) {
