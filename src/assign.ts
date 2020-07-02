@@ -39,15 +39,15 @@ export async function assignAccordingLabel (context: Context) {
   await assignMilestone(context, labels, number)
 }
 
-async function assignMilestone (context: Context, labels: string[], number: number) {
-  const { data: currentMilestone } = await context.github.issues.getMilestone({
-    ...context.repo(),
-    number
-  })
+async function assignMilestone (context: Context, labels: any[], number: number) {
+  // const { data: currentMilestone } = await context.github.issues.getMilestone({
+  //   ...context.repo(),
+  //   number
+  // })
 
-  if (currentMilestone && currentMilestone.id) {
-    return
-  }
+  // if (currentMilestone && currentMilestone.id) {
+  //   return
+  // }
 
   const latestVersion = await getlatestVersion('@tarojs/runtime')
 
@@ -56,7 +56,7 @@ async function assignMilestone (context: Context, labels: string[], number: numb
   const nextPatch = semver.inc(latestVersion, 'patch')
   const nextMinor = semver.inc(latestVersion, 'minor')
 
-  if (labels.find(l => l === 'P-0' || l === 'P-1')) {
+  if (labels.find(l => l.name === 'P-0' || l.name === 'P-1')) {
     const milestone = milestones.find(m => m.title === nextPatch)
     if (milestone) {
       try {
@@ -70,7 +70,7 @@ async function assignMilestone (context: Context, labels: string[], number: numb
     }
   }
 
-  if (labels.find(l => l === 'P-2')) {
+  if (labels.find(l => l.name === 'P-2')) {
     const milestone = milestones.find(m => m.title === nextMinor)
     if (milestone) {
       try {
