@@ -62,7 +62,8 @@ async function assignMilestone (context: Context, labels: any[], number: number)
       try {
         await context.github.issues.edit({
           ...context.repo(),
-          milestone: milestone.number
+          milestone: milestone.number,
+          number
         })
       } catch (error) {
         context.log.error(error)
@@ -76,7 +77,8 @@ async function assignMilestone (context: Context, labels: any[], number: number)
       try {
         await context.github.issues.edit({
           ...context.repo(),
-          milestone: milestone.number
+          milestone: milestone.number,
+          number
         })
       } catch (error) {
         context.log.error(error)
