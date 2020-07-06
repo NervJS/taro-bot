@@ -84,8 +84,8 @@ interface LabelsResponser {
 export const labelsResponser: LabelsResponser = {
   'A-typings': ['ZakaryCode'],
   'A-runner': ['Chen-jj'],
-  'A-cli': ['luckyadam'],
+  'A-cli': ['Chen-jj'],
   'A-taroize': ['luckyadam'],
   'A-rn': ['Pines-Cheng'],
-  'A-runtime': ['yuche']
+  'A-runtime': ['Chen-jj']
 }

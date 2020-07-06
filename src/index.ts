@@ -1,6 +1,7 @@
 import { Application, Context } from 'probot' // eslint-disable-line no-unused-vars
 import { Marker } from './marker'
 import { Closeable } from './close'
+import { classify } from './classify'
 // import { welcomeNewIssue, welcomeNewPR } from './welcome'
 import { assignAccordingLabel, informAssignees } from './assign'
 import { markerConfigs } from './config'
@@ -12,7 +13,10 @@ const createScheduler = require('probot-scheduler')
 export = (robot: Application) => {
   // robot.on('pull_request.opened', welcomeNewPR)
 
-  robot.on('issues.opened', validate)
+  robot.on('issues.opened', async (context: Context) => {
+    await validate(context)
+    await classify(context)
+  })
 
   robot.on('issues.labeled', assignAccordingLabel)
 
