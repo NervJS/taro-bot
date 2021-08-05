@@ -17,9 +17,18 @@ export async function validate (context: Context) {
     return
   }
 
-  if (!issue.body.includes(ISSUE_HELPER_MESSAGE)) {
+  if (!issue.body || !issue.body.includes(ISSUE_HELPER_MESSAGE)) {
     await context.github.issues.createComment(context.issue({
       body: INVALID_MESSAGE
     }))
+    try {
+      await context.github.issues.edit({
+        ...context.repo(),
+        number: context.payload.issue.number,
+        state: 'closed'
+      }) 
+    } catch (error) {
+      context.log.error(error)
+    }
   }
 }

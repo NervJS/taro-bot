@@ -2,7 +2,7 @@ import { Application, Context } from 'probot' // eslint-disable-line no-unused-v
 import { Marker } from './marker'
 import { Closeable } from './close'
 import { classify } from './classify'
-// import { welcomeNewIssue, welcomeNewPR } from './welcome'
+import { welcomeNewPR } from './welcome'
 import { assignAccordingLabel, informAssignees } from './assign'
 import { markerConfigs } from './config'
 import { WeeklyDigest } from './weekly-digest/digest'
@@ -11,7 +11,7 @@ import { validate } from './validate'
 const createScheduler = require('probot-scheduler')
 
 export = (robot: Application) => {
-  // robot.on('pull_request.opened', welcomeNewPR)
+  robot.on('pull_request.opened', welcomeNewPR)
 
   robot.on('issues.opened', async (context: Context) => {
     await validate(context)

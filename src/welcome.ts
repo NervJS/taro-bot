@@ -34,4 +34,13 @@ function welcome (type: 'issue' | 'pr') {
 }
 
 export const welcomeNewIssue = welcome('issue')
-export const welcomeNewPR = welcome('pr')
+
+export const welcomeNewPR = async function (context: Context) {
+  try {
+    await context.github.issues.createComment(context.issue({body: welcomeConfig.newPRWelcomeComment}))
+  } catch (err) {
+    if (err.code !== 404) {
+      context.log.info(err)
+    }
+  }
+}

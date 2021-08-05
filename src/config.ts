@@ -17,13 +17,12 @@ const newIssueWelcomeComment = `欢迎提交 Issue~
 Good luck and happy coding~`
 
 // 首次提交 PR 的欢迎语
-const newPRWelcomeComment = `欢迎提交 Pull Request~
+const newPRWelcomeComment = `欢迎提交 PR~ Taro 非常感谢您对开源事业做出的贡献!🌷🌷🌷
 
-请检查您的代码符合 [JavaScript Standard Guide](https://github.com/standard/standard) 规范，您的提交信息也应当遵循 [Angular Style Commit Message Conventions](https://gist.github.com/stephenparish/9941e89d80e2bc58a153)。
+为了更好地进行沟通，欢迎加入 Taro 开发者微信群：
 
-如果相关的包存在测试的话请务必确保所有测试用例都能通过，并添加 PR 内容相关的测试用例。
-
-Taro 非常感谢您对开源事业做出的贡献。👏👏👏`
+<img src="http://storage.jd.com/taro-jd-com/static/contact_taro_devlop_qr.png" width="200px" height="200px">
+`
 
 export const welcomeConfig: WelcomeConfig = {
   newIssueWelcomeComment,

@@ -15,6 +15,16 @@ npm run build
 npm start
 ```
 
+### Development
+
+#### Already had .env
+
+https://probot.github.io/docs/development/#manually-configuring-a-github-app
+
+#### .env hadn't been set
+
+https://probot.github.io/docs/development/#configuring-a-github-app
+
 ## Contributing
 
 If you have suggestions for how taro-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.

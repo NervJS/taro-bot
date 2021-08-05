@@ -29,6 +29,7 @@ export async function assignAccordingLabel (context: Context) {
     try {
       await context.github.issues.edit({
         ...context.repo(),
+        number,
         state: 'closed'
       }) 
     } catch (error) {
