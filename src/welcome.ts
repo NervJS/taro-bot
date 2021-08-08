@@ -36,6 +36,20 @@ function welcome (type: 'issue' | 'pr') {
 export const welcomeNewIssue = welcome('issue')
 
 export const welcomeNewPR = async function (context: Context) {
+  const { repository, pull_request } = context.payload
+  const user = pull_request.user.login
+
+  const res = await context.github.repos.getContributors({
+    owner: repository.owner.login,
+    repo: repository.name,
+    per_page: 30
+  })
+
+  const contributors = res.data.map(item => item.login)
+
+  // 老熟人就不需要回复了
+  if (contributors.includes(user)) return
+
   try {
     await context.github.issues.createComment(context.issue({body: welcomeConfig.newPRWelcomeComment}))
   } catch (err) {
