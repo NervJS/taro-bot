@@ -5,6 +5,8 @@ import { getMouthName, getHeadDate, getTailDate, checkDuplicates, getNumDayFromL
 import { markdownBody } from './markdown-body'
 import { App } from '../app'
 
+const WEEKLY_DIGEST = 'weekly-digest'
+
 function buildDate (date: MomentObjectOutput) {
   return `${date.years} 年 ${getMouthName(date.months)} ${date.date} 日`
 }
@@ -15,7 +17,7 @@ export class WeeklyDigest extends App {
   }
 
   async sweep () {
-    await this.ensureLabelExists('weekly-digest', '9C27B0')
+    await this.ensureLabelExists(WEEKLY_DIGEST, '9C27B0')
 
     const headDate = getHeadDate()
     const tailDate = getTailDate()
@@ -35,7 +37,11 @@ export class WeeklyDigest extends App {
     const tailDateObject = moment(tailDate).toObject()
     const title = `项目周报 (${buildDate(tailDateObject)} - ${buildDate(headDateObject)})`
     const body = await markdownBody(this.context, headDate, tailDate)
-    const labels = ['weekly-digest']
+    const labels = [WEEKLY_DIGEST]
+
+    // 删除上一个周报
+    await this.closeLastDigest()
+
     await this.createIssue({ title, body, labels })
     console.log('released')
     // console.log(title, labels, body)
@@ -53,6 +59,22 @@ export class WeeklyDigest extends App {
       body,
       labels
     })
+  }
+
+  private async closeLastDigest () {
+    const { context } = this
+    const res = await context.github.issues.getForRepo(context.repo({
+      labels: WEEKLY_DIGEST
+    }))
+    const openWeeklyDigest = res.data.find(item => item.state === 'open')
+    if (openWeeklyDigest) {
+      await context.github.issues.edit({
+        ...context.repo(),
+        number: openWeeklyDigest.number,
+        state: 'closed'
+      })
+      console.log(`close weekly digest: #${openWeeklyDigest.number}`)
+    }
   }
   
 }
