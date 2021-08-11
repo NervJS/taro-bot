@@ -17,11 +17,19 @@ const newIssueWelcomeComment = `欢迎提交 Issue~
 Good luck and happy coding~`
 
 // 首次提交 PR 的欢迎语
-const newPRWelcomeComment = `欢迎提交 PR~ Taro 非常感谢您对开源事业做出的贡献!🌷🌷🌷
+const newPRWelcomeComment = `欢迎提交 PR~ Taro 非常感谢您对开源事业做出的贡献！🌷🌷🌷
 
-为了更好地进行沟通，欢迎加入 Taro 开发者微信群：
+一般 PR 会在**一到两周**内进行 review，成功合入后会随下一个版本进行发布。
 
-<img src="http://storage.jd.com/taro-jd-com/static/contact_taro_devlop_qr.png" width="200px" height="200px">
+Review 需要耗费大量时间，所以请遵循以下规范，协助我们提高 review 效率🙏🙏🙏
+
+1. 详细介绍 PR 的背景（**非常重要**，例如解决了什么问题，该问题如何复现等）
+2. 确保 CI 顺利运行。
+3. 最好能提供对应的测试用例。
+
+为了更好地进行沟通，请加入 Taro 开发者微信群：
+
+<img src="http://storage.360buyimg.com/taro-jd-com/static/contact_taro_devlop_qr.png" width="200px" height="200px">
 `
 
 export const welcomeConfig: WelcomeConfig = {
