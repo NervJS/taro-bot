@@ -6,6 +6,7 @@ import { markdownStargazers } from './markdown-star'
 import { markdownReleases } from './markdown-release'
 import { markdownCommits } from './markdown-commit'
 import { markdownContributors } from './markdown-contributors'
+import { ISSUE_HELPER_MESSAGE } from '../config'
 
 export const markdownBody = async (context: Context, headDate: string, tailDate: string) => {
   let body = ''
@@ -50,5 +51,7 @@ export const markdownBody = async (context: Context, headDate: string, tailDate:
   body += `\n - - - \n`
   body += '\n'
   body += `以上就是本周的项目周报。你可以点击 [weekly-digest](https://github.com/NervJS/taro/issues?q=is%3Aissue+label%3Aweekly-digest) 查看往期的项目周报。`
+  body += '\n'
+  body += ISSUE_HELPER_MESSAGE
   return body
 }
