@@ -11,6 +11,7 @@ const issueCreatedBody = { body: 'Thanks for opening this issue!' }
 
 nock.disableNetConnect()
 
+// app.test.ts
 describe('My Probot app', () => {
   let probot: any
 
