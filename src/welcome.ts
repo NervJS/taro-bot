@@ -2,6 +2,7 @@ import { Context } from 'probot'
 import { welcomeConfig } from './config'
 
 function welcome (type: 'issue' | 'pr') {
+
   return async (context: Context) => {
     const response = await context.github.issues.getForRepo(context.repo({
       state: 'all',
@@ -49,6 +50,13 @@ export const welcomeNewPR = async function (context: Context) {
 
   // 老熟人就不需要回复了
   if (contributors.includes(user)) return
+
+  const commentResult = await context.github.issues.listComments(context.repo({
+    ...context.repo(),
+    number: context.payload.number,
+  })) || { data: [] }
+
+  if (commentResult.data.some(comment => comment.body.includes(welcomeConfig.newPRWelcomeComment))) return
 
   try {
     await context.github.issues.createComment(context.issue({body: welcomeConfig.newPRWelcomeComment}))
