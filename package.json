@@ -31,7 +31,7 @@
     "probot-scheduler": "github:probot/scheduler#0da3a0005c0619201bb26a9d20a3ac985930e6d4",
     "request-promise": "^4.2.2",
     "scramjet": "^4.18.14",
-    "semver": "^7.3.2"
+    "semver": "^7.5.2"
   },
   "devDependencies": {
     "@types/jest": "^23.1.5",
